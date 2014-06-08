@@ -1,0 +1,8 @@
+df<-read.delim("household_power_consumption.txt", header = TRUE, sep=";", na.strings="?")
+df_subset<-subset(df, Date=="1/2/2007" | Date=="2/2/2007")
+date_time<-paste( df_subset$Date, df_subset$Time)
+date_time<-strptime(date_time, format="%d/%m/%Y %H:%M:%S")
+df_data<-data.frame( date=date_time, gap=df_subset$Global_active_power)
+plot(df_data$date, df_data$gap, type="l", xlab="", ylab="Global Active Power (kilowatts)")
+dev.copy(png, filename="plot2.png", height=480, width=480, units="px")
+dev.off()
